@@ -20,7 +20,8 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    package_dir={"": "pipeline_functions"},
-    packages=setuptools.find_packages(where="pipeline_functions"),
+    packages=setuptools.find_packages(
+        exclude="examples"
+    ),
     python_requires=">=3.6",
 )

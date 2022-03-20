@@ -1,4 +1,4 @@
-from exceptions import PipelineFunctionsNotExists
+from .exceptions import PipelineFunctionsNotExists
 
 
 class PipelineFunctions:

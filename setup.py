@@ -3,9 +3,11 @@ import setuptools
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+
 setuptools.setup(
     name="pipeline_functions",
     version="0.0.1",
+    license='GPLv3+',
     author="Paulo Roberto",
     author_email="paulo.pinda@gmail.com",
     description="Class for manipulating a pipeline of functions, creating chains of functions processing the same context",
@@ -20,8 +22,6 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    packages=setuptools.find_packages(
-        exclude="examples"
-    ),
+    packages=setuptools.find_packages(exclude=("examples", "tests")),
     python_requires=">=3.6",
 )

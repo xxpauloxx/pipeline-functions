@@ -36,5 +36,6 @@ class PipelineFunctions:
             except Exception as error:
                 if self.__block_mode is True:
                     raise PipelineFunctionsRuntimeError(str(error))
-                self.__logger.warn("{} runtime error: {}".format(fn.__name__, error))
+                self.__logger.warn("{} function runtime error: {}".format(fn.__name__, error)
+                                                                  .capitalize())
 

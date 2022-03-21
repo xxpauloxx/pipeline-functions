@@ -10,32 +10,32 @@ class PipelineFunctions:
     __logger = Logger()
     __block_mode = False
     __functions: list = []
-    __last_parameter: dict = {}
+    __response: dict = {}
 
-    def __init__(self, functions: list = [], debug_mode: bool = False, block_mode: bool = False):
+    def __init__(self, functions: list = [], debug_mode: bool = True, block_mode: bool = False):
         """Constructor that receives the functions that will be processed in the pipeline."""
         if len(functions) == 0:
             raise PipelineFunctionsNotExistsError()
+        self.__response.clear()
         self.__logger = Logger(debug_mode)
         self.__block_mode = block_mode
         self.__functions = functions
 
-    def choice_parameter(self, parameter: dict = {}) -> dict:
+    def choice_parameter(self, param: dict = {}) -> dict:
         """Method that checks when the parameter is in the pipeline."""
-        if len(parameter.keys()) != 0 and len(self.__last_parameter.keys()) == 0:
-            return parameter
-        return self.__last_parameter
+        if len(param.keys()) != 0 and len(self.__response.keys()) == 0:
+            return param
+        return self.__response
 
-    def execute(self, param: dict = {}) -> None:
+    def execute(self, param: dict = {}) -> dict:
         """Method that executes all functions in the pipeline, receiving
            parameters and returning information to the next function."""
         for fn in self.__functions:
             try:
                 self.__logger.info("Calling function {} with {}.".format(fn.__name__,  param))
-                self.__last_parameter = fn(self.choice_parameter(param))
+                self.__response = fn(self.choice_parameter(param))
             except Exception as error:
                 if self.__block_mode is True:
                     raise PipelineFunctionsRuntimeError(str(error))
-                self.__logger.warn("{} function runtime error: {}".format(fn.__name__, error)
-                                                                  .capitalize())
-
+                self.__logger.warn("Function {} runtime error: {}".format(fn.__name__, error))
+        return self.__response

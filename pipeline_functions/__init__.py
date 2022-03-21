@@ -10,7 +10,7 @@ class PipelineFunctions:
     __logger = Logger()
     __block_mode = False
     __functions: list = []
-    __last_parameter: dict = { "step": 0, "body": {} }
+    __last_parameter: dict = {}
 
     def __init__(self, functions: list = [], debug_mode: bool = False, block_mode: bool = False):
         """Constructor that receives the functions that will be processed in the pipeline."""
@@ -36,5 +36,5 @@ class PipelineFunctions:
             except Exception as error:
                 if self.__block_mode is True:
                     raise PipelineFunctionsRuntimeError(str(error))
-                self.__logger.warn("Runtime error: {}".format(error))
+                self.__logger.warn("{} runtime error: {}".format(fn.__name__, error))
 
